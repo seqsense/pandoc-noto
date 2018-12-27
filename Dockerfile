@@ -2,12 +2,10 @@ FROM ubuntu:xenial
 
 RUN apt-get update -qq \
   && apt-get install --no-install-recommends -y \
+    ca-certificates \
     etoolbox \
     lmodern \
     make \
-    pandoc \
-    python-pip \
-    texlive-fonts-recommended \
     texlive-latex-recommended \
     texlive-xetex \
     unzip \
@@ -23,5 +21,13 @@ RUN wget -q https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKjp-hin
   && mkdir -p $HOME/.fonts/NotoSansCJKjp \
   && unzip /tmp/NotoSansCJKjp.zip -d $HOME/.fonts/NotoSansCJKjp \
   && rm /tmp/NotoSansCJKjp.zip
+
+ENV PANDOC_VERSION 2.5
+
+RUN wget -q https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-linux.tar.gz -O /tmp/pandoc.tar.gz \
+  && cd /tmp && tar xzf /tmp/pandoc.tar.gz \
+  && ls -la /tmp/pandoc-${PANDOC_VERSION} \
+  && cp -r /tmp/pandoc-${PANDOC_VERSION}/* /usr/ \
+  && rm -rf /tmp/pandoc.tar.gz /tmp/pandoc-${PANDOC_VERSION}
 
 WORKDIR /work
