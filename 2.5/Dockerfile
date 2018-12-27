@@ -7,6 +7,7 @@ RUN apt-get update -qq \
     lmodern \
     make \
     texlive-latex-recommended \
+    texlive-math-extra \
     texlive-xetex \
     unzip \
     wget \
